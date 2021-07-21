@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.sercvice;
+package io.security.corespringsecurity.security.configs.service;
 
 
 import io.security.corespringsecurity.domain.Account;
