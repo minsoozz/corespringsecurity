@@ -1,7 +1,6 @@
 package io.security.corespringsecurity.security.configs.provider;
 
 import io.security.corespringsecurity.security.configs.service.AccountContext;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
