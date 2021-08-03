@@ -42,6 +42,7 @@
     - a tag 를 사용해서 GET 요청 SecurityContextLogoutHandler 활용
 
 - 인증 여부에 따라 로그인/로그아웃 표현(Thymeleaf)
+
 ~~~  
   <li sec:authorize="isAnonymous()"><a th:href="@{/login}">로그인</a></li>
   <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li>
