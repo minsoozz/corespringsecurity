@@ -38,8 +38,8 @@
 ### 로그아웃 및 화면 보안 처리
 
 - 로그아웃 방법
-    - form tag 를 사용해 POST 요청
-    - a tag 를 사용해서 GET 요청 SecurityContextLogoutHandler 활용
+    - ```<form>``` 태그를 사용해 POST 요청
+    - ```<a>``` 태그를 사용해서 GET 요청 SecurityContextLogoutHandler 활용
 
 - 인증 여부에 따라 로그인/로그아웃 표현(Thymeleaf)
 
@@ -48,5 +48,28 @@
   <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">로그아웃</a></li>
 ~~~
 
-  
+- Thymeleaf 에서 SpringSecurity 표현식을 사용하는 방법
 
+    - pom.xml 에 dependency 추가
+    - html 태그에 속성 추가
+~~~
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+~~~
+
+~~~
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+~~~
+
+### WebAuthenticationDetails, AuthenticationDetailsSource
+
+![web_authentication_details](../static/images/web_authentication_details.png)
+- WebAuthenticationDetails
+    - 인증 과정 중 전달된 데이터를 저장
+    - Authentication의 details 속성에 저장
+
+- AuthenticationDetailsSource
+    - WebAuthenticationDetails 객체를 생성
