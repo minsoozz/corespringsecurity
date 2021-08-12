@@ -1,11 +1,12 @@
 package io.security.corespringsecurity.security.configs;
 
-import io.security.corespringsecurity.security.configs.provider.CustomAuthenticationProvider;
+import io.security.corespringsecurity.security.configs.provider.FormAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   UserDetailsService userDetailsService;
 
+  @Autowired
+  private AuthenticationDetailsSource authenticationDetailsSource;
+
   /**
    * 스프링 시큐리티가 사용자가 만든 UserDetailsService 구현체를 사용해서 인증처리를 하게 된다
    *
@@ -37,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public AuthenticationProvider authenticationProvider() {
-    return new CustomAuthenticationProvider();
+    return new FormAuthenticationProvider();
   }
 
   @Bean
@@ -60,13 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(final HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/", "/users","user/login/**").permitAll()
+        .antMatchers("/", "/users", "user/login/**").permitAll()
         .antMatchers("/mypage").hasRole("USER")
         .antMatchers("/messages").hasRole("MANAGER")
         .antMatchers("/config").hasRole("ADMIN")
         .anyRequest().authenticated()
     .and()
         .formLogin()
+        .authenticationDetailsSource(authenticationDetailsSource)
         .loginPage("/login")
         .loginProcessingUrl("/login_proc")
         .defaultSuccessUrl("/")
