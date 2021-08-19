@@ -11,7 +11,9 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
   private RequestCache requestCache = new HttpSessionRequestCache();
@@ -22,9 +24,14 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {
 
+    setDefaultTargetUrl("/");
+
     SavedRequest savedRequest = requestCache.getRequest(request, response);
     if (savedRequest != null) {
-      String target = savedRequest.getRedirectUrl();
+      String targetUrl = savedRequest.getRedirectUrl();
+      redirectStrategy.sendRedirect(request, response, targetUrl);
+    } else {
+      redirectStrategy.sendRedirect(request, response, getDefaultTargetUrl());
     }
   }
 }

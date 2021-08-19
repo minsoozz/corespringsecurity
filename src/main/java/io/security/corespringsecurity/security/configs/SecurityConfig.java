@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Slf4j
 @Configuration
@@ -27,6 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private AuthenticationDetailsSource authenticationDetailsSource;
+
+  @Autowired
+  private AuthenticationSuccessHandler custonAuthenticationSuccessHandler;
 
   /**
    * 스프링 시큐리티가 사용자가 만든 UserDetailsService 구현체를 사용해서 인증처리를 하게 된다
@@ -75,6 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginProcessingUrl("/login_proc")
         .authenticationDetailsSource(authenticationDetailsSource)
         .defaultSuccessUrl("/")
+        .successHandler(custonAuthenticationSuccessHandler)
         .permitAll()
     ;
   }
