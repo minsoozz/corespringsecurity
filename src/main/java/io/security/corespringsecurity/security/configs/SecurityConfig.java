@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Slf4j
@@ -30,7 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private AuthenticationDetailsSource authenticationDetailsSource;
 
   @Autowired
-  private AuthenticationSuccessHandler custonAuthenticationSuccessHandler;
+  private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
+
+  @Autowired
+  private AuthenticationFailureHandler customAuthenticationFailureHandler;
 
   /**
    * 스프링 시큐리티가 사용자가 만든 UserDetailsService 구현체를 사용해서 인증처리를 하게 된다
@@ -68,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(final HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/", "/users", "user/login/**").permitAll()
+        .antMatchers("/", "/users", "user/login/**", "/login*").permitAll()
         .antMatchers("/mypage").hasRole("USER")
         .antMatchers("/messages").hasRole("MANAGER")
         .antMatchers("/config").hasRole("ADMIN")
@@ -77,9 +81,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin()
         .loginPage("/login")
         .loginProcessingUrl("/login_proc")
-        .authenticationDetailsSource(authenticationDetailsSource)
         .defaultSuccessUrl("/")
-        .successHandler(custonAuthenticationSuccessHandler)
+        .authenticationDetailsSource(authenticationDetailsSource)
+        .successHandler(customAuthenticationSuccessHandler)
+        .failureHandler(customAuthenticationFailureHandler)
         .permitAll()
     ;
   }
