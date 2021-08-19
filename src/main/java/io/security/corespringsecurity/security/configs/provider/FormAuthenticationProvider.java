@@ -37,14 +37,12 @@ public class FormAuthenticationProvider implements AuthenticationProvider {
         .getDetails();
 
     String secretKey = formWebAuthenticationDetails.getSecretKey();
-    if (secretKey == null || "secret".equals(secretKey)) {
+    if (secretKey == null || !"secret".equals(secretKey)) {
       throw new InsufficientAuthenticationException("InsufficientAuthenticationException");
     }
 
-    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+    return new UsernamePasswordAuthenticationToken(
         accountContext.getAccount(), null, accountContext.getAuthorities());
-
-    return authenticationToken;
   }
 
   @Override
