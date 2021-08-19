@@ -1,7 +1,7 @@
-package io.security.corespringsecurity.security.configs.provider;
+package io.security.corespringsecurity.security.provider;
 
 import io.security.corespringsecurity.security.common.FormWebAuthenticationDetails;
-import io.security.corespringsecurity.security.configs.service.AccountContext;
+import io.security.corespringsecurity.security.service.AccountContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
