@@ -1,5 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
+import io.security.corespringsecurity.security.common.FormAuthenticationDetailsSource;
+import io.security.corespringsecurity.security.handler.CustomAccessDeniedHandler;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -28,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   UserDetailsService userDetailsService;
 
   @Autowired
-  private AuthenticationDetailsSource authenticationDetailsSource;
+  private FormAuthenticationDetailsSource authenticationDetailsSource;
 
   @Autowired
   private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -86,6 +89,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .successHandler(customAuthenticationSuccessHandler)
         .failureHandler(customAuthenticationFailureHandler)
         .permitAll()
+    .and()
+        .exceptionHandling()
+        .accessDeniedHandler(accessDeniedHandler())
     ;
+  }
+
+  @Bean
+  public AccessDeniedHandler accessDeniedHandler(){
+    AccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler();
+    accessDeniedHandler.setErrorPage("denied");
+    return
   }
 }
