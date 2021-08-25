@@ -1,6 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
 import io.security.corespringsecurity.security.common.FormAuthenticationDetailsSource;
+import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
 import io.security.corespringsecurity.security.handler.CustomAccessDeniedHandler;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Slf4j
 @Configuration
@@ -49,14 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     auth.authenticationProvider(authenticationProvider());
   }
 
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-    return new FormAuthenticationProvider();
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
-    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  public AuthenticationProvider authenticationProvider() {
+    return new FormAuthenticationProvider();
   }
 
   /**
@@ -79,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/messages").hasRole("MANAGER")
         .antMatchers("/config").hasRole("ADMIN")
         .anyRequest().authenticated()
-    .and()
+        .and()
         .formLogin()
         .loginPage("/login")
         .loginProcessingUrl("/login_proc")
@@ -88,10 +92,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .successHandler(customAuthenticationSuccessHandler)
         .failureHandler(customAuthenticationFailureHandler)
         .permitAll()
-    .and()
+        .and()
         .exceptionHandling()
+        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+        .accessDeniedPage("/denied")
         .accessDeniedHandler(accessDeniedHandler())
-    ;
+        .and()
+        .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.csrf().disable();
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
   @Bean
@@ -99,5 +112,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CustomAccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler();
     accessDeniedHandler.setErrorPage("/denied");
     return accessDeniedHandler;
+  }
+
+  @Bean
+  public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
+    AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
+    ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
+    return ajaxLoginProcessingFilter;
   }
 }

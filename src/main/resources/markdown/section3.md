@@ -49,9 +49,9 @@
 ~~~
 
 - Thymeleaf 에서 SpringSecurity 표현식을 사용하는 방법
-
     - pom.xml 에 dependency 추가
     - html 태그에 속성 추가
+
 ~~~
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
@@ -67,18 +67,23 @@
 ### WebAuthenticationDetails, AuthenticationDetailsSource
 
 ![web_authentication_details](../static/images/web_authentication_details.png)
+
 - WebAuthenticationDetails
     - 인증 과정 중 전달된 데이터를 저장
     - Authentication의 details 속성에 저장
 
 - AuthenticationDetailsSource
     - WebAuthenticationDetails 객체를 생성
-    
+
 ### Ajax 인증
+
 ![ajax_authentication](../static/images/ajax_authentication.png)
+
 - AbstractAuthenticationProcessingFilter 상속
 - 필터 작동 조건
     - AntPathRequestMatcher("/api/login") 로 요청정보와 매칭하고 요청 방식이 Ajax 이면 필터 작동
+
 - AjaxAuthenticationToken 생성하여 AuthenticationManager 에게 전달하여 인증처리
+  
 - Filter 추가
     - http.addFilterBefore(AjaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
