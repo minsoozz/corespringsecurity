@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,7 +17,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -28,10 +28,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 @Configuration
 @EnableWebSecurity
+@Order(1)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-  @Autowired
-  UserDetailsService userDetailsService;
 
   @Autowired
   private FormAuthenticationDetailsSource authenticationDetailsSource;
@@ -60,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Bean
   public AuthenticationProvider authenticationProvider() {
-    return new FormAuthenticationProvider();
+    return new FormAuthenticationProvider(passwordEncoder());
   }
 
   /**
@@ -96,10 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling()
         .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
         .accessDeniedPage("/denied")
-        .accessDeniedHandler(accessDeniedHandler())
-        .and()
-        .addFilterBefore(ajaxLoginProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.csrf().disable();
+        .accessDeniedHandler(accessDeniedHandler());
   }
 
   @Bean
@@ -112,12 +107,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CustomAccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler();
     accessDeniedHandler.setErrorPage("/denied");
     return accessDeniedHandler;
-  }
-
-  @Bean
-  public AjaxLoginProcessingFilter ajaxLoginProcessingFilter() throws Exception {
-    AjaxLoginProcessingFilter ajaxLoginProcessingFilter = new AjaxLoginProcessingFilter();
-    ajaxLoginProcessingFilter.setAuthenticationManager(authenticationManagerBean());
-    return ajaxLoginProcessingFilter;
   }
 }
