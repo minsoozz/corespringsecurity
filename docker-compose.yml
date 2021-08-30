@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  springbootdb:
+    image: mariadb10.3:v1
+    container_name: mariadb-spring-boot
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db-data/:/var/lib/mysql
+      - ./config/mariadb/custom.cnf:/etc/mysql/mariadb.conf.d/custom.cnf
+      - ./config/dbdata:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: postgres
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: springboot
+      TZ: Asia/Seoul
+    #restart: always
+    networks:
+      - spring_boot_net
+
+networks:
+  spring_boot_net:
+    driver: bridge
