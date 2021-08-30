@@ -19,7 +19,6 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
   public AjaxLoginProcessingFilter() {
     super(new AntPathRequestMatcher("/api/login"));
-    System.out.println("asdasd");
   }
 
   @Override
