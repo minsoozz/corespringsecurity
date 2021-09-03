@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    /*web.ignoring().requestMatchers().antMatchers("/favicon.ico","/resources/**","/error");*/
   }
 
   @Override
@@ -96,6 +97,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .accessDeniedPage("/denied")
         .accessDeniedHandler(accessDeniedHandler());
   }
+
+
 
   @Bean
   public PasswordEncoder passwordEncoder() {

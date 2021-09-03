@@ -10,12 +10,11 @@ public class MessageController {
 
   @GetMapping(value = "/messages")
   public String messages() throws Exception {
-
     return "user/messages";
   }
 
-  @GetMapping("/api/messages")
   @ResponseBody
+  @GetMapping("/api/messages")
   public String apiMessage() {
     return "messages_ok";
   }
