@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.sercvice.impl;
 
-import io.security.corespringsecurity.domain.Account;
+import io.security.corespringsecurity.domain.entity.Account;
 import io.security.corespringsecurity.repository.UserRepository;
 import io.security.corespringsecurity.sercvice.UserService;
 import lombok.RequiredArgsConstructor;

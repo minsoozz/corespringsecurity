@@ -99,3 +99,16 @@
         - public void configure(H http) - 설정
 
 - HttpSecurity 의 apply(C configurer) 메서드 사용
+
+
+### Ajax 로그인 구현 & CSRF 설정
+
+- 헤더 설정
+    - 전송 방식이 Ajax 인지 여부를 위한 헤더설정
+        - xhr.setRequestHeaer("X-Requested-With","XMLHttpRequest"); 
+        - CSRF 헤더 설정
+            - ```<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>```
+            - ```<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>```
+            - ```var csrfHeader = $('meta[name="_csrf_header"]').attr('content')```
+            - ```var csrfToken = $('meta[name="_csrf"]').attr('content’)```
+            - ```xhr.setRequestHeader(csrfHeader, csrfToken);```

@@ -1,6 +1,6 @@
 package io.security.corespringsecurity.sercvice;
 
-import io.security.corespringsecurity.domain.Account;
+import io.security.corespringsecurity.domain.entity.Account;
 
 public interface UserService {
 
