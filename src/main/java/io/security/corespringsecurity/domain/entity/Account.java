@@ -1,4 +1,4 @@
-package io.security.corespringsecurity.domain;
+package io.security.corespringsecurity.domain.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
