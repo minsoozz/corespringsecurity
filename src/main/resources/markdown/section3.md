@@ -84,10 +84,9 @@
     - AntPathRequestMatcher("/api/login") 로 요청정보와 매칭하고 요청 방식이 Ajax 이면 필터 작동
 
 - AjaxAuthenticationToken 생성하여 AuthenticationManager 에게 전달하여 인증처리
-  
+
 - Filter 추가
     - http.addFilterBefore(AjaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-
 
 ### Ajax Custom DSLs 구현하기
 
@@ -100,12 +99,11 @@
 
 - HttpSecurity 의 apply(C configurer) 메서드 사용
 
-
 ### Ajax 로그인 구현 & CSRF 설정
 
 - 헤더 설정
     - 전송 방식이 Ajax 인지 여부를 위한 헤더설정
-        - xhr.setRequestHeaer("X-Requested-With","XMLHttpRequest"); 
+        - xhr.setRequestHeaer("X-Requested-With","XMLHttpRequest");
         - CSRF 헤더 설정
             - ```<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>```
             - ```<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>```
