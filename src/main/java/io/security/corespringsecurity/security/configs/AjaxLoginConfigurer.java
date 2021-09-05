@@ -31,7 +31,7 @@ public final class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
   @Override
   public void configure(H http) {
 
-    if(authenticationManager == null){
+    if (authenticationManager == null) {
       authenticationManager = http.getSharedObject(AuthenticationManager.class);
     }
     getAuthenticationFilter().setAuthenticationManager(authenticationManager);
@@ -48,7 +48,7 @@ public final class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
     if (rememberMeServices != null) {
       getAuthenticationFilter().setRememberMeServices(rememberMeServices);
     }
-    http.setSharedObject(AjaxLoginProcessingFilter.class,getAuthenticationFilter());
+    http.setSharedObject(AjaxLoginProcessingFilter.class, getAuthenticationFilter());
     http.addFilterBefore(getAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
 
@@ -57,12 +57,14 @@ public final class AjaxLoginConfigurer<H extends HttpSecurityBuilder<H>> extends
     return this;
   }
 
-  public AjaxLoginConfigurer<H> failureHandlerAjax(AuthenticationFailureHandler authenticationFailureHandler) {
+  public AjaxLoginConfigurer<H> failureHandlerAjax(
+      AuthenticationFailureHandler authenticationFailureHandler) {
     this.failureHandler = authenticationFailureHandler;
     return this;
   }
 
-  public AjaxLoginConfigurer<H> setAuthenticationManager(AuthenticationManager authenticationManager) {
+  public AjaxLoginConfigurer<H> setAuthenticationManager(
+      AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
     return this;
   }

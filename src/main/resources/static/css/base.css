@@ -1,16 +1,55 @@
 @charset "utf-8";
 
-.cc-tab-con { padding: 5px 0 30px; overflow: hidden; }
-.cc-tab-item { display: block; position: relative; float: left; margin-left: -1px; padding: 0 10px; min-width: 180px; height: 50px; line-height: 50px; font-size: 16px; font-weight: bold; color: #7b7b7b; text-align: center; text-decoration: none !important; z-index: 5; border: 1px solid #d4d4d4; -webkit-transition: color 0.4s; transition: color 0.4s; }
-.cc-tab-item:first-child { margin-left: 0; }
-.cc-tab-item:hover { color: #ed3e64; }
-.cc-tab-item.on { cursor: default; line-height: 45px; color: #ed3e64; border-color: #ed3e64; border-bottom: 0 none; border-top-width: 5px; z-index: 8; }
+.cc-tab-con {
+    padding: 5px 0 30px;
+    overflow: hidden;
+}
+
+.cc-tab-item {
+    display: block;
+    position: relative;
+    float: left;
+    margin-left: -1px;
+    padding: 0 10px;
+    min-width: 180px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #7b7b7b;
+    text-align: center;
+    text-decoration: none !important;
+    z-index: 5;
+    border: 1px solid #d4d4d4;
+    -webkit-transition: color 0.4s;
+    transition: color 0.4s;
+}
+
+.cc-tab-item:first-child {
+    margin-left: 0;
+}
+
+.cc-tab-item:hover {
+    color: #ed3e64;
+}
+
+.cc-tab-item.on {
+    cursor: default;
+    line-height: 45px;
+    color: #ed3e64;
+    border-color: #ed3e64;
+    border-bottom: 0 none;
+    border-top-width: 5px;
+    z-index: 8;
+}
+
 .security {
-    height:200px;
+    height: 200px;
     background-image: url("../images/springsecurity.jpg");
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -54,6 +93,7 @@
     font-size: .75rem;
     text-transform: uppercase;
 }
+
 .navbar-brand {
     padding-top: .75rem;
     padding-bottom: .75rem;
@@ -78,5 +118,11 @@
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
