@@ -5,7 +5,7 @@ target
 logs
 build
 !.mvn/wrapper/maven-wrapper.jar
-/src/main/resources/maxmind/
+/src/main/resourcesDto/maxmind/
 
 ### STS ###
 .apt_generated
