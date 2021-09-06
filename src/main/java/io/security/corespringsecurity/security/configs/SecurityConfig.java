@@ -1,8 +1,7 @@
 package io.security.corespringsecurity.security.configs;
 
 import io.security.corespringsecurity.security.common.FormAuthenticationDetailsSource;
-import io.security.corespringsecurity.security.filter.AjaxLoginProcessingFilter;
-import io.security.corespringsecurity.security.handler.CustomAccessDeniedHandler;
+import io.security.corespringsecurity.security.handler.FormAccessDeniedHandler;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Slf4j
 @Configuration
@@ -104,10 +102,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
-  @Bean
   public AccessDeniedHandler accessDeniedHandler() {
-    CustomAccessDeniedHandler accessDeniedHandler = new CustomAccessDeniedHandler();
-    accessDeniedHandler.setErrorPage("/denied");
-    return accessDeniedHandler;
+    FormAccessDeniedHandler commonAccessDeniedHandler = new FormAccessDeniedHandler();
+    commonAccessDeniedHandler.setErrorPage("/denied");
+    return commonAccessDeniedHandler;
   }
 }
