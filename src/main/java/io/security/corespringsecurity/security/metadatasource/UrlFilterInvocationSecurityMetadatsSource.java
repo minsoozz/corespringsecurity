@@ -12,6 +12,11 @@ import java.util.*;
 
 public class UrlFilterInvocationSecurityMetadatsSource implements FilterInvocationSecurityMetadataSource {
 
+  public UrlFilterInvocationSecurityMetadatsSource(
+      LinkedHashMap<RequestMatcher, List<ConfigAttribute>> resourcesMap) {
+    this.requestMap = resourcesMap;
+  }
+
   private LinkedHashMap<RequestMatcher, List<ConfigAttribute>> requestMap = new LinkedHashMap<>();
 
   @Override

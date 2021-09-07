@@ -14,17 +14,41 @@
     - Method - 메소드 호출 시 인가처리
         - Method
         - Pointcut
-        
+
 ### 주요 아키텍처 이해
 
 ![authorization](../static/images/authorization.png)
 ![authorization_architecture](../static/images/authorization_architecture.png)
+
 - 스프링 시큐리티의 인가처리
-  - http.antMatchers("/user").access("hasRole('USER')")
-    - 사용자가 /user 자원에 접근하기 위해서는 ROLE_USER 권한이 필요하다
+    - http.antMatchers("/user").access("hasRole('USER')")
+        - 사용자가 /user 자원에 접근하기 위해서는 ROLE_USER 권한이 필요하다
 
 ### FilterInvocationSecurityMetadataSource (1)
+
 ![filter_invocation_security_metadata_source_1](../static/images/filter_invocation_security_metadata_source_1.png)
 ![filter_invocation_security_metadata_source_2](../static/images/filter_invocation_security_metadata_source_2.png)
 
+### FilterInvocationSecurityMetadataSource (2)
 
+![filter_invocation_security_metadata_source_3](../static/images/filter_invocation_security_metadata_source_3.png)
+
+- http.addFilterAt(filterSecurityInterceptor(), FilterSecurityInterceptor.class)
+
+```
+@Bean
+public FilterSecurityInterceptor filterSecurityInterceptor() {
+FilterSecurityInterceptor filterSecurityInterceptor = new FilterSecurityInterceptor();
+filterSecurityInterceptor.setAuthenticationManager(authenticationManager);
+filterSecurityInterceptor.setSecurityMetadataSource(urlFilterInvocationSecurityMetadataSource());
+filterSecurityInterceptor.setAccessDecisionManager(accessDecisionManager);
+return filterSecurityInterceptor;
+}
+```
+
+```
+@Bean
+public FilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource() {
+return new UrlFilterInvocationSecurityMetadataSource();
+}
+```
