@@ -5,7 +5,7 @@ import io.security.corespringsecurity.security.common.FormWebAuthenticationDetai
 import io.security.corespringsecurity.security.handler.AjaxAuthenticationFailureHandler;
 import io.security.corespringsecurity.security.handler.AjaxAuthenticationSuccessHandler;
 import io.security.corespringsecurity.security.handler.FormAccessDeniedHandler;
-import io.security.corespringsecurity.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
+import io.security.corespringsecurity.security.metadatasource.UrlFilterInvocationSecurityMetadataSource;
 import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvider;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
 import io.security.corespringsecurity.service.SecurityResourceService;
@@ -158,7 +158,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Bean
   public FilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadataSource()
       throws Exception {
-    return new UrlFilterInvocationSecurityMetadatsSource(urlResourcesMapFactoryBean().getObject());
+    return new UrlFilterInvocationSecurityMetadataSource(urlResourcesMapFactoryBean().getObject());
   }
 
   private UrlResourcesMapFactoryBean urlResourcesMapFactoryBean() {
