@@ -52,3 +52,6 @@ public FilterInvocationSecurityMetadataSource urlFilterInvocationSecurityMetadat
 return new UrlFilterInvocationSecurityMetadataSource();
 }
 ```
+
+### 웹 기반 인가처리 실시간 반영하기
+![url_filter_invocation_security_metadata_source](../static/images/url_filter_invocation_security_metadata_source.png)
