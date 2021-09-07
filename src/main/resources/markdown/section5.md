@@ -14,3 +14,10 @@
     - Method - 메소드 호출 시 인가처리
         - Method
         - Pointcut
+        
+### 주요 아키텍처 이해
+![authorization](../static/images/authorization.png)
+![authorization_architecture](../static/images/authorization_architecture.png)
+- 스프링 시큐리티의 인가처리
+  - http.antMatchers("/user").access("hasRole('USER')")
+    - 사용자가 /user 자원에 접근하기 위해서는 ROLE_USER 권한이 필요하다
