@@ -59,3 +59,12 @@ return new UrlFilterInvocationSecurityMetadataSource();
 ### PermitAllFilter 구현
 ![permit_all_filter](../static/images/permit_all_filter.png)
 - 인증 및 권한심사를 할 필요가 없는 자원(/, /home, /login..)들을 미리 설정해서 바로 리소스 접근이 가능하게 하는 필터
+
+
+### RoleHierarchy
+
+- RoleHierarchy
+  - 상위 계층 Role 은 하위 계층 Role 의 자원에 접근 가능함
+  - ROLE_ADMIN -> ROLE_MANAGER -> ROLE_USER 일 경우 ROLE_ADMIN 만 있으면 하위 ROLE 의 권한을 모두 포함한다
+- RoleHierarchyVoter
+  - RoleHierarchy 를 생성자로 받으며 이 클래스에서 설정한 규칙이 적용되어 심사함
