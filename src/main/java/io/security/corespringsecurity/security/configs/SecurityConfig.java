@@ -10,6 +10,7 @@ import io.security.corespringsecurity.security.metadatasource.UrlFilterInvocatio
 import io.security.corespringsecurity.security.provider.AjaxAuthenticationProvider;
 import io.security.corespringsecurity.security.provider.FormAuthenticationProvider;
 import io.security.corespringsecurity.service.SecurityResourceService;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.AffirmativeBased;
+import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -160,7 +164,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   private List<AccessDecisionVoter<?>> getAccessDecistionVoters() {
-    return Arrays.asList(new RoleVoter());
+
+    List<AccessDecisionVoter<? extends Object>> accessDecisionVoters = new ArrayList<>();
+    accessDecisionVoters.add(roleVoter());
+
+    return accessDecisionVoters;
+  }
+
+  @Bean
+  public AccessDecisionVoter<? extends Object> roleVoter() {
+    return new RoleHierarchyVoter(roleHierarchy());
+  }
+
+  @Bean
+  public RoleHierarchyImpl roleHierarchy() {
+    return new RoleHierarchyImpl();
   }
 
   private UrlResourcesMapFactoryBean urlResourcesMapFactoryBean() {
