@@ -1,7 +1,6 @@
 package io.security.corespringsecurity.service;
 
 import io.security.corespringsecurity.domain.entity.Resources;
-
 import java.util.List;
 
 public interface ResourcesService {

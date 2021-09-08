@@ -1,10 +1,9 @@
 package io.security.corespringsecurity.repository;
 
 import io.security.corespringsecurity.domain.entity.Resources;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 public interface ResourcesRepository extends JpaRepository<Resources, Long> {
 

@@ -1,15 +1,10 @@
 package io.security.corespringsecurity.security.service;
 
 import io.security.corespringsecurity.domain.entity.Account;
+import java.util.List;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class AccountContext extends User {

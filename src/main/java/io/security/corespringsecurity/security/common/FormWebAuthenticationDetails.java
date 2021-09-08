@@ -1,8 +1,7 @@
 package io.security.corespringsecurity.security.common;
 
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 public class FormWebAuthenticationDetails extends WebAuthenticationDetails {
 
