@@ -1,3 +1,4 @@
+/*
 package io.security.corespringsecurity.config;
 
 import io.security.corespringsecurity.repository.AccessIpRepository;
@@ -19,4 +20,4 @@ public class AppConfig {
     SecurityResourceService SecurityResourceService = new SecurityResourceService(resourcesRepository, roleHierarchy, roleHierarchyService, accessIpRepository);
     return SecurityResourceService;
   }
-}
+}*/
