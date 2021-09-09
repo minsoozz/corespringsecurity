@@ -94,4 +94,20 @@ return new UrlFilterInvocationSecurityMetadataSource();
             - 맵 기반 권한 설정 방식
             - 맵 기반 방식으로 외부와 연동하여 메소드 보안 설정 구현
 
+### 주요 아키텍처 이해
 
+![order_service](../static/images/order_service.png)
+
+- 인가 처리를 위한 초기화 과정 진행
+    - 초기화 과정
+        - 초기화 시 전체 빈을 검사하면서 보안이 설정된 메소드가 있는지 탐색
+        - 빈의 프록시 객체를 생성
+        - 보안 메소드에 인가처리(권한심사) 기능을 하는 Advice 등록
+        - 빈 참조시 실제 빈이 아닌 프록시 빈 객체 참조
+    - 진행과정
+        - 메소드 호출 시 프록시 객체를 통해 메소드를 호출
+        - Advice 가 등록되어 있다면 Advice 를 작동하게 하여 인가 처리
+        - 권한 심사 통과하면 실제 빈의 메소드를 호출한다
+        
+![default_advisor](../static/images/default_advisor.png)
+![order_service_proxy](../static/images/order_service_proxy.png)          
