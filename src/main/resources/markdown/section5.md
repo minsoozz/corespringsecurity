@@ -68,3 +68,13 @@ return new UrlFilterInvocationSecurityMetadataSource();
   - ROLE_ADMIN -> ROLE_MANAGER -> ROLE_USER 일 경우 ROLE_ADMIN 만 있으면 하위 ROLE 의 권한을 모두 포함한다
 - RoleHierarchyVoter
   - RoleHierarchy 를 생성자로 받으며 이 클래스에서 설정한 규칙이 적용되어 심사함
+
+### CustomIpAddressVoter
+![custom_ip_address_voter](../static/images/custom_ip_address_voter.png)
+- 심의 기준
+  - 특정한 IP 만 접근이 가능하도록 심의하는 Voter 추가
+  - Voter 중에서 가장 먼저 심사하도록 하여 허용된 IP 일 경우에만 최종 승인 및 거부 결정을 하도록 한다
+  - 허용된 IP 이면 ACCESS_GRANTED 가 아닌 ACCESS_ABSTAIN 을 리턴해서 추가 심의를 계속 진행하도록 한다
+  - 허용된 IP 가 아니면 ACCESS_DENIED 를 리턴하지 않고 즉시 예외 발생하여 최종 자원 접근 거부
+
+
